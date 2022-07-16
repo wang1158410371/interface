@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+
+    <test verbose="2" preserve-order="true" name="/Users/anita/Desktop/文件/interface01/src/main/resources">
+        <classes>
+            <class name="TestService">
+                <methods>
+                    <include name="test01">
+
+                    </include>
+                </methods>
+            </class>
+
+        </classes>
+    </test>
+    <listeners>
+        <listener class-name="com.example.utils.TestngListener"/>
+
+    </listeners>
+</suite>

@@ -1,0 +1,21 @@
+# 应用名称
+
+
+# 应用服务 WEB 访问端口
+server.port: 8080
+
+#数据库的驱动和url.
+#url中的serverTimezone是对数据库时区的设置，8.0以上版本需要加入，而且8.0以后的mysql版本需要加入driver-class-name
+
+spring:
+    application:
+      name: interface01
+    datasource:
+      username: root
+      password: wang123456
+      url: jdbc:mysql://localhost:3306/user01?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT
+      driver-class-name: com.mysql.cj.jdbc.Driver
+#指定Mybatis的Mapper文件
+mybatis.mapper-locations: classpath:mybatis/*.xml
+
+
