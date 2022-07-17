@@ -2,6 +2,7 @@ import com.example.demo01.Interface01Application;
 
 import com.example.utils.HttpClientResult;
 import com.example.utils.HttpClientUtils;
+import lombok.val;
 import org.apache.http.HttpEntity;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
@@ -24,6 +25,7 @@ import com.example.demo01.service.UsersSer;
 import java.io.*;
 import java.net.URLEncoder;
 import java.util.*;
+import java.util.stream.Stream;
 
 
 /**
@@ -74,97 +76,39 @@ public class TestService  extends AbstractTestNGSpringContextTests{
     @Test
     public void printTest(){
 
-
-        Map<Object,Object> map = new HashMap<>();
-        StringBuffer stringBuffer=new StringBuffer();
-        map.put("name","wangzhihao");
-        map.put("sex","222");
-        System.out.println("map"+map);
-
-        int i=0;
-        for (Object key:map.keySet())
-        {
-            i++;
-            stringBuffer.append(key+"=");
-            stringBuffer.append(map.get(key));
-            if (i<map.size()) {
-
-                stringBuffer.append("&");
-
-            }
-            System.out.println("stringBuffer"+stringBuffer);
-
-        }
-        // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-
-
-
-        // 创建Get请求
-        String url="http://localhost:8080/hello1/222?"+stringBuffer;
-        System.out.println("url"+url);
-        HttpGet httpGet = new HttpGet(url);
-        // 响应模型
-        CloseableHttpResponse response = null;
-        try {
-            // 配置信息
-            RequestConfig requestConfig = RequestConfig.custom()
-                    // 设置连接超时时间(单位毫秒)
-                    .setConnectTimeout(5000)
-                    // 设置请求超时时间(单位毫秒)
-                    .setConnectionRequestTimeout(5000)
-                    // socket读写超时时间(单位毫秒)
-                    .setSocketTimeout(5000)
-                    // 设置是否允许重定向(默认为true)
-                    .setRedirectsEnabled(true).build();
-
-            // 将上面的配置信息 运用到这个Get请求里
-            httpGet.setConfig(requestConfig);
-
-            // 由客户端执行(发送)Get请求
-            response = httpClient.execute(httpGet);
-
-            // 从响应模型中获取响应实体
-
-            HttpEntity responseEntity = response.getEntity();
-
-
-            System.out.println("响应状态为:" + response.getStatusLine());
-            if (responseEntity != null) {
-                System.out.println("响应内容长度为:" + responseEntity.getContentLength());
-                System.out.println("相应内容为："+EntityUtils.toString(responseEntity));
-//                //io流形式获取相应内容
-//                InputStream content =responseEntity.getContent();
-//                BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(content));
-//                String line="";
-//                //当内容为空时停止打印
-//                while ((line=bufferedReader.readLine())!=null) {
-//                    System.out.println("响应内容为:" + line);
-//                }
-//                //关闭读流
-//                bufferedReader.close();
-            }
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                // 释放资源
-                if (httpClient != null) {
-                    httpClient.close();
-                }
-                if (response != null) {
-                    response.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        List<String> list = new ArrayList<>();
+        list.add("张无忌");
+        list.add("周芷若");
+        list.add("赵敏");
+        list.add("小昭");
+        list.add("殷离");
+        list.add("张三");
+        list.add("张三丰");
+        list.stream()
+                .filter(name -> name.startsWith("张"))
+                .filter(name -> name.length() == 3)
+                .forEach(name -> System.out.println(name));
     }
+
+    @Test
+    public void test04(){
+        List<Integer> list = Arrays.asList(6, 7, 3, 8, 1, 2, 9);
+        Stream<Integer> stream = list.stream();
+        stream.filter(x -> x > 3).forEach(System.out::println);
+        List<Integer> list1=Arrays.asList(1,2,3,4,5);
+        Stream<Integer> stream1= list1.stream();
+        stream1.filter(x -> x <5).forEach(System.out::println);
+
+
 
 
     }
+
+}
+
+
+
+
+
+
 
